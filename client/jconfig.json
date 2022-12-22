@@ -1,0 +1,6 @@
+{
+    "compaileroption":{
+        "baseUser":"src"
+    },
+    "include":["src"]
+}
