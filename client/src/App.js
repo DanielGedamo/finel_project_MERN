@@ -1,20 +1,38 @@
-import {BrowserRoutrer, Nvigate , Routes, Route } from 'react-router-dom';
-import homePage from './scenes/homePage/indexs';
-import loginPage from './scenes/loginPage';
-import profilePage from './scenes/profilePage/profilePage';
+import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import HomePage from "./scenes/homePage/indexs";
+import LoginPage from "./scenes/loginPage/index";
+import ProfilePage from "./scenes/profilePage/profilePage";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+import { themeSettings } from "./theme";
+
 function App() {
+  const mode = useSelector((state) => state.mode);
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const isAuth = Boolean(useSelector((state) => state.token));
 
   return (
-    <div className='app'>
-<BrowserRoutrer>
-<Routes>
-  <Route path="/" elememt = {loginPage}></Route>
-  <Route path="/home" elememt = {homePage}></Route>
-  <Route path="/profile/:userId" elememt = {profilePage}></Route>
-
-</Routes>
-</BrowserRoutrer>
+    <div className="app">
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route
+              path="/home"
+              element={isAuth ? <HomePage /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile/:userId"
+              element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+            />
+          </Routes>
+        </ThemeProvider>
+      </BrowserRouter>
     </div>
   );
 }
+
 export default App;

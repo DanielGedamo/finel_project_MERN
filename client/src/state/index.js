@@ -12,34 +12,36 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setMode: (state) => {
-      state.mode = state.mode === "light" ? "derk" : "light";
+      state.mode = state.mode === "light" ? "dark" : "light";
     },
     setLogin: (state, action) => {
-      state.user = action.paylod.user;
-      state.token = action.paylod.token;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
-    setlogout: (state) => {
+    setLogout: (state) => {
       state.user = null;
       state.token = null;
     },
     setFriends: (state, action) => {
       if (state.user) {
-        state.user.Friends = action.paylod.Friends;
+        state.user.friends = action.payload.friends;
       } else {
-        console.log("user friends nin-exsistene");
+        console.error("user friends non-existent :(");
       }
     },
     setPosts: (state, action) => {
-      state.posts = action.posts;
+      state.posts = action.payload.posts;
     },
     setPost: (state, action) => {
-      const updatedPost = state.posts.map((post) => {
-        if (post._id === action.paylod.post_id) return action.paylod.post;
+      const updatedPosts = state.posts.map((post) => {
+        if (post._id === action.payload.post._id) return action.payload.post;
         return post;
       });
-      state.post = updatedPost;
-    }
-  } 
+      state.posts = updatedPosts;
+    },
+  },
 });
-export const {setMode, setLogin, setlogout, setFriends,setPosts, setPost} = authSlice.action;
-export default authSlice.reducers
+
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
+  authSlice.actions;
+export default authSlice.reducer;
