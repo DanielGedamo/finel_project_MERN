@@ -1,9 +1,9 @@
 import { Box } from "@mui/material"
-import NavBar from "../NavBar/index"
+// import NavBar from "../NavBar/index"
 
 const HomePage = () => {
     return (<Box>
-        <NavBar/>
+        {/* <NavBar/> */}
 
         </Box>)
 }
